@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sound Guardian: The Harmony Battle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Cinzel+Decorative:wght@400;700&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="grain-overlay" aria-hidden="true"></div>
+  <div class="sparkles" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span>
+  </div>
+
+  <nav class="top-nav">
+    <div class="nav-left">
+      <a href="#landing" class="nav-link active-home" id="nav-home">Home</a>
+      <a href="#scene1" class="nav-link" id="nav-story">Story</a>
+      <a href="#game" class="nav-link nav-link--adventure" id="nav-adventure">Sound Adventure</a>
+      <a href="#team" class="nav-link" id="nav-team">About the Team</a>
+    </div>
+    <div class="nav-right">
+      <label for="volumeSlider">Volume</label>
+      <input id="volumeSlider" type="range" min="0" max="1" step="0.01" value="0.55" />
+    </div>
+  </nav>
+
+  <main>
+    <section id="landing" class="section section--landing">
+      <div class="landing-content">
+        <p class="landing-kicker">An ancient warning returns</p>
+        <h1>Sound Guardian: The Harmony Battle</h1>
+        <p class="landing-story">
+          In an age where noise drowns memory, the sealed demon of discord begins to stir.
+          Only one Guardian can weave sound back into harmony before the world falls silent in chaos.
+        </p>
+        <button id="orbTrigger" class="orb-button" aria-label="Start story by clicking red light"></button>
+        <p class="landing-instruction">Click on Red Light</p>
+        <a href="#game" class="btn landing-quick-link">Skip to Sound Adventure</a>
+      </div>
+    </section>
+
+    <section id="scene1" class="section scene scene--1">
+      <div class="scene-card">
+        <button class="scene-sound-btn" id="sceneReplayBtn" aria-label="Replay scene sound">🔊</button>
+        <h2 id="storySceneTitle">Scene I</h2>
+        <p id="storySceneText">For centuries, it slept… Lying dormant. Waiting. Biding its time.</p>
+        <div class="scene-controls">
+          <button class="btn btn--ghost" id="storyPrevBtn" type="button">Prev</button>
+          <button class="btn btn--quest" id="storyNextBtn" type="button">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="game" class="section section--game">
+      <div class="game-header">
+        <div class="progress-wrap">
+          <span id="roundLabel">Round 1 / 3</span>
+          <div class="progress-track">
+            <div id="progressBar" class="progress-bar"></div>
+          </div>
+        </div>
+        <div class="score-display">Score: <span id="scoreValue">0</span></div>
+      </div>
+
+      <div class="game-layout">
+        <div class="monster-panel">
+          <div class="monster-stage" id="monsterStage">
+            <svg id="monsterSvg" class="monster monster--normal" viewBox="0 0 400 420" role="img" aria-label="Sound Demon">
+              <defs>
+                <radialGradient id="bodyShade" cx="50%" cy="42%" r="65%">
+                  <stop offset="0%" stop-color="#1b1b25" />
+                  <stop offset="100%" stop-color="#05050a" />
+                </radialGradient>
+              </defs>
+              <path
+                d="M65 300 C45 240, 80 210, 112 195 C92 164, 95 126, 126 96 C101 74, 111 36, 162 32 C189 6, 232 6, 257 30 C306 32, 318 70, 294 96 C324 126, 330 164, 310 194 C342 212, 376 238, 355 301 C338 349, 298 376, 256 386 C240 402, 215 411, 200 410 C184 411, 160 402, 144 386 C103 376, 82 350, 65 300 Z"
+                fill="url(#bodyShade)"
+              />
+              <path d="M142 83 L116 32 L144 54 L167 30 L160 78 Z" fill="#0a0a12" />
+              <path d="M258 84 L282 30 L256 52 L232 30 L238 79 Z" fill="#0a0a12" />
+              <ellipse cx="163" cy="202" rx="10" ry="7" fill="#2d0303" />
+              <ellipse cx="238" cy="202" rx="10" ry="7" fill="#2d0303" />
+              <path d="M160 252 Q200 283 240 252" stroke="#140606" stroke-width="8" fill="none" />
+            </svg>
+            <div id="gameOverlay" class="game-overlay"></div>
+          </div>
+        </div>
+
+        <div class="game-panel">
+          <h2 id="gameSceneTitle">Scene 5</h2>
+          <p class="game-intro">Choose a sound to influence the balance between harmony and chaos.</p>
+          <div id="songList" class="song-list"></div>
+          <p id="effectText" class="effect-text"></p>
+          <button id="nextRoundBtn" class="btn btn--next hidden">Next Round</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="ending" class="section section--ending">
+      <div class="ending-card" id="endingCard">
+        <h2 id="endingTitle"></h2>
+        <p id="endingText"></p>
+        <div id="endingBurst" class="ending-burst" aria-hidden="true"></div>
+        <div class="ending-actions">
+          <button id="tryAgainBtn" class="btn">Try Again</button>
+          <a href="#landing" id="backHomeBtn" class="btn btn--ghost">Back to Home</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="team" class="section section--team">
+      <div class="team-card team-card--wide">
+        <h2>About the Team</h2>
+        <p class="team-subtitle">Four guardians behind the Sound Guardian experience.</p>
+        <div class="team-grid">
+          <article class="photocard">
+            <div class="photo-wrap">
+              <img src="Images/Team Members/mily.jpg" alt="Mily photo" />
+            </div>
+            <h3>Rabeya Zahan Mily</h3>
+            <p class="role">Web Developer</p>
+            <p class="about">Hi! I am a senior studying Computer Science with minors in Economics and Interactive Media Arts.</p>
+          </article>
+
+          <article class="photocard">
+            <div class="photo-wrap photo-wrap--placeholder">
+              <span>Photo 2</span>
+            </div>
+            <h3>Member 2</h3>
+            <p class="role">Role: Add role here</p>
+            <p class="about">About: Add a short intro about this member.</p>
+          </article>
+
+          <article class="photocard">
+            <div class="photo-wrap photo-wrap--placeholder">
+              <span>Photo 3</span>
+            </div>
+            <h3>Member 3</h3>
+            <p class="role">Role: Add role here</p>
+            <p class="about">About: Add a short intro about this member.</p>
+          </article>
+
+          <article class="photocard">
+            <div class="photo-wrap photo-wrap--placeholder">
+              <span>Photo 4</span>
+            </div>
+            <h3>Member 4</h3>
+            <p class="role">Role: Add role here</p>
+            <p class="about">About: Add a short intro about this member.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
