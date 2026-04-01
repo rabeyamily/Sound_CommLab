@@ -25,7 +25,10 @@
       <a href="#landing" class="nav-link active-home" id="nav-home">Home</a>
       <a href="#scene1" class="nav-link" id="nav-story">Story</a>
       <a href="#game" class="nav-link nav-link--adventure" id="nav-adventure">Sound Adventure</a>
-      <a href="#team" class="nav-link" id="nav-team">About the Team</a>
+      <a href="#team" class="nav-link" id="nav-team" aria-label="About the Team">
+        <span class="nav-label-desktop">About the Team</span>
+        <span class="nav-label-mobile">Team</span>
+      </a>
     </div>
     <div class="nav-right">
       <label for="volumeSlider">Volume</label>
@@ -105,7 +108,7 @@
       </div>
     </section>
 
-    <section id="ending" class="section section--ending">
+    <section id="ending" class="section section--ending" aria-hidden="true">
       <div class="ending-card" id="endingCard">
         <h2 id="endingTitle"></h2>
         <p id="endingText"></p>

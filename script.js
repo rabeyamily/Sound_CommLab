@@ -66,6 +66,7 @@ const refs = {
   endingTitle: document.getElementById("endingTitle"),
   endingText: document.getElementById("endingText"),
   endingCard: document.getElementById("endingCard"),
+  endingSection: document.getElementById("ending"),
   tryAgainBtn: document.getElementById("tryAgainBtn"),
   navStory: document.getElementById("nav-story"),
   sectionNodes: Array.from(document.querySelectorAll("#landing, #scene1, #game, #ending, #team"))
@@ -745,6 +746,8 @@ function renderRound() {
 function endGame() {
   // Win threshold from spec: >= 60 out of max 90.
   const won = state.score >= 60;
+  refs.endingSection.classList.add("is-visible");
+  refs.endingSection.setAttribute("aria-hidden", "false");
   refs.endingCard.classList.remove("win", "lose");
   refs.gameOverlay.classList.remove("is-darkened");
 
@@ -781,6 +784,8 @@ function resetGame() {
   refs.monsterSvg.classList.remove("monster--small", "monster--large", "monster--defeated", "monster--victorious");
   refs.monsterSvg.classList.add("monster--normal");
   refs.gameOverlay.classList.remove("is-darkened");
+  refs.endingSection.classList.remove("is-visible");
+  refs.endingSection.setAttribute("aria-hidden", "true");
   refs.endingCard.classList.remove("win", "lose");
   renderRound();
   window.location.hash = "#game";

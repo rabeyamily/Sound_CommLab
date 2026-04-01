@@ -1,5 +1,7 @@
 :root {
   /* Global design tokens: palette + typography */
+  /* Fixed nav (~10px top + ~52px bar) + small breath; scroll-padding matches */
+  --nav-safe-top: 82px;
   --bg-void: #04050b;
   --bg-deep: #080d1c;
   --bg-ink: #0d1324;
@@ -22,6 +24,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Anchor jumps (#game, #team) land below the fixed pill nav */
+  scroll-padding-top: var(--nav-safe-top);
 }
 
 body {
@@ -30,6 +34,12 @@ body {
   color: var(--text-main);
   font-family: var(--font-ui);
   background: radial-gradient(circle at 25% 20%, #131b30 0%, var(--bg-void) 58%, #000 100%);
+  overflow-x: hidden;
+}
+
+main {
+  width: 100%;
+  max-width: 100%;
   overflow-x: hidden;
 }
 
@@ -131,6 +141,11 @@ body {
   box-shadow: inset 0 0 0 1px rgba(240, 192, 64, 0.3);
 }
 
+/* Short nav label only on small screens (see max-width: 620px) */
+.nav-label-mobile {
+  display: none;
+}
+
 .nav-right {
   display: flex;
   align-items: center;
@@ -149,9 +164,10 @@ body {
   min-height: 100vh;
   position: relative;
   z-index: 3;
-  padding: 96px 20px 40px;
+  padding: var(--nav-safe-top) max(20px, env(safe-area-inset-right, 0px)) 36px max(20px, env(safe-area-inset-left, 0px));
   display: flex;
-  align-items: center;
+  /* Start content just under the nav; center horizontally only (no vertical float in 100vh) */
+  align-items: flex-start;
   justify-content: center;
 }
 
@@ -165,6 +181,8 @@ body {
 .section--landing {
   /* Landing intro mood: dark ritual glow */
   background: radial-gradient(circle at center, #1d1324 0%, #08060f 42%, #020204 100%);
+  align-items: center;
+  justify-content: center;
 }
 
 .landing-content {
@@ -235,6 +253,7 @@ body {
   /* Shared scene container; mood differences come from modifier classes */
   background-size: cover;
   background-position: center;
+  overflow-x: clip;
 }
 
 .scene::before {
@@ -263,7 +282,10 @@ body {
 
 .scene-card {
   /* Story narration panel over the scene gradient */
-  width: min(760px, 95%);
+  width: min(760px, calc(100% - 8px));
+  max-width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
   padding: 30px 26px 24px;
   background: rgba(5, 9, 17, 0.76);
   border: 1px solid rgba(240, 192, 64, 0.22);
@@ -349,8 +371,17 @@ body {
 .section--game {
   /* Combat arena background where rounds are played */
   background: radial-gradient(circle at 15% 14%, #13213d 0%, #090c18 45%, #030306 100%);
-  align-items: stretch;
   flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.section--game > .game-header,
+.section--game > .game-layout {
+  width: min(1150px, 100%);
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .game-header {
@@ -574,16 +605,24 @@ body {
 .section--ending {
   /* End-state atmosphere (win/lose styling is class-driven) */
   background: radial-gradient(circle at center, #19101c 0%, #0a0a13 40%, #000 100%);
+  display: none;
+}
+
+.section--ending.is-visible {
+  display: flex;
 }
 
 .ending-card {
-  width: min(700px, 95%);
+  width: min(700px, calc(100% - 24px));
+  max-width: 100%;
+  margin-inline: auto;
   border-radius: 20px;
   border: 1px solid rgba(240, 192, 64, 0.2);
   background: rgba(8, 10, 17, 0.78);
   padding: 32px 24px;
   text-align: center;
   position: relative;
+  box-sizing: border-box;
 }
 
 .ending-card h2 {
@@ -657,7 +696,9 @@ body {
 }
 
 .team-card {
-  width: min(680px, 92%);
+  width: min(680px, 100%);
+  max-width: min(1100px, calc(100% - 8px));
+  margin-inline: auto;
   text-align: center;
   border-radius: 16px;
   border: 1px solid rgba(240, 192, 64, 0.24);
@@ -676,7 +717,10 @@ body {
 }
 
 .team-card--wide {
-  width: min(1100px, 95%);
+  width: min(1100px, calc(100% - 24px));
+  max-width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
 }
 
 .team-subtitle {
@@ -826,10 +870,26 @@ body {
 
 @media (max-width: 980px) {
   /* Tablet breakpoint: stacked game columns + 2-column team grid */
+  :root {
+    --nav-safe-top: 80px;
+  }
+
+  html {
+    scroll-padding-top: var(--nav-safe-top);
+  }
+
   .top-nav {
     width: calc(100% - 18px);
     border-radius: 20px;
-    padding: 10px 12px;
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .nav-link {
+    font-size: 0.82rem;
+    padding: 7px 10px;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
   }
 
   .game-layout {
@@ -856,25 +916,301 @@ body {
 }
 
 @media (max-width: 620px) {
-  /* Mobile breakpoint: wrapped nav + single-column team cards */
-  .top-nav {
-    flex-wrap: wrap;
-    row-gap: 8px;
+  /* Mobile: column nav (links scroll horizontally, volume on its own row) + single-column team */
+  :root {
+    /* Match real stacked nav height + notch; avoids huge empty band under header */
+    --nav-safe-top: calc(env(safe-area-inset-top, 0px) + 108px);
+  }
+
+  html {
+    scroll-padding-top: var(--nav-safe-top);
+  }
+
+  /* Start content just under the fixed nav instead of vertically centering in 100vh */
+  .section {
+    padding-top: var(--nav-safe-top);
+    padding-left: max(12px, env(safe-area-inset-left, 0px));
+    padding-right: max(12px, env(safe-area-inset-right, 0px));
+    padding-bottom: 28px;
+    align-items: flex-start;
     justify-content: center;
   }
 
-  .nav-left {
+  .section--landing {
+    align-items: center;
     justify-content: center;
+  }
+
+  .section--game {
+    align-items: stretch;
+  }
+
+  .top-nav {
+    flex-direction: column;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    row-gap: 0;
+    justify-content: flex-start;
+    top: max(6px, env(safe-area-inset-top, 0px));
+    width: calc(100% - 12px);
+    padding: 10px 10px 12px;
+    border-radius: 16px;
+  }
+
+  /* Single row of links: centered as a group when they fit; scroll if needed */
+  .nav-left {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
     width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(240, 192, 64, 0.35) transparent;
+    padding-bottom: 6px;
+    margin-bottom: 2px;
+  }
+
+  .nav-left::-webkit-scrollbar {
+    height: 3px;
+  }
+
+  .nav-left::-webkit-scrollbar-thumb {
+    background: rgba(240, 192, 64, 0.35);
+    border-radius: 999px;
+  }
+
+  .nav-link {
+    flex: 0 0 auto;
+    font-size: 0.68rem;
+    padding: 8px 11px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .nav-link--adventure {
+    /* Slightly shorter label feel on narrow screens without changing copy */
+    padding-inline: 9px;
+  }
+
+  .nav-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    gap: 6px;
+    padding-top: 8px;
+    margin-top: 4px;
+    border-top: 1px solid rgba(240, 192, 64, 0.14);
+    flex-wrap: nowrap;
+  }
+
+  .nav-right label {
+    display: block;
+    width: auto;
+    text-align: center;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    margin-bottom: 0;
+  }
+
+  /* Slimmer volume control on phones */
+  #volumeSlider {
+    align-self: center;
+    width: min(100%, 220px);
+    max-width: 92%;
+    margin: 0 auto;
+    flex: 0 0 auto;
+    height: 14px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  #volumeSlider::-webkit-slider-runnable-track {
+    height: 3px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(240, 192, 64, 0.22);
+  }
+
+  #volumeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 11px;
+    height: 11px;
+    margin-top: -5px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 2px rgba(7, 11, 22, 0.95);
+    border: none;
+  }
+
+  #volumeSlider::-moz-range-track {
+    height: 3px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(240, 192, 64, 0.22);
+  }
+
+  #volumeSlider::-moz-range-thumb {
+    width: 11px;
+    height: 11px;
+    border: none;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 2px rgba(7, 11, 22, 0.95);
+  }
+
+  .nav-label-desktop {
+    display: none;
+  }
+
+  .nav-label-mobile {
+    display: inline;
+  }
+
+  .landing-kicker {
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    padding-top: 4px;
+  }
+
+  .landing-content h1 {
+    font-size: clamp(1.35rem, 7vw, 2.4rem);
+    line-height: 1.15;
+  }
+
+  .landing-story {
+    padding: 12px 14px;
+    font-size: 0.95rem;
   }
 
   .game-header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
     gap: 10px;
+    width: 100%;
+    max-width: 100%;
+    padding-inline: 0;
+    box-sizing: border-box;
+  }
+
+  .progress-wrap {
+    width: 100%;
+    max-width: 100%;
+    justify-items: center;
+  }
+
+  #roundLabel {
+    text-align: center;
+    width: 100%;
+  }
+
+  .score-display {
+    width: 100%;
+    text-align: center;
+  }
+
+  .progress-track {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .game-layout {
+    width: 100%;
+    max-width: 100%;
+    padding-inline: 0;
+    box-sizing: border-box;
+  }
+
+  .monster-panel,
+  .game-panel {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .song-buttons {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 6px;
+  }
+
+  .sound-btn {
+    padding: 8px 10px;
+    font-size: 0.72rem;
+  }
+
+  /* Story card: full width, controls stack so long labels never clip */
+  .scene-card {
+    width: 100%;
+    max-width: 100%;
+    margin-inline: 0;
+    padding: 22px 14px 18px;
+    box-sizing: border-box;
+  }
+
+  .scene-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .scene-controls .btn {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  /* Decorative label sits behind text and can overflow on narrow screens */
+  .scene--1::after,
+  .scene--2::after,
+  .scene--3::after,
+  .scene--4::after {
+    display: none;
+  }
+
+  .team-card,
+  .team-card--wide {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 22px 14px;
   }
 
   .team-grid {
     grid-template-columns: 1fr;
+  }
+
+  .photocard {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .ending-card {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 24px 16px;
+  }
+
+  .song-head {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+  }
+}
+
+/* Very small phones: tighten nav link padding only */
+@media (max-width: 380px) {
+  .nav-link {
+    font-size: 0.62rem;
+    padding: 7px 8px;
   }
 }
