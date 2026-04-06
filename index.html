@@ -25,6 +25,7 @@
       <a href="#landing" class="nav-link active-home" id="nav-home">Home</a>
       <a href="#scene1" class="nav-link" id="nav-story">Story</a>
       <a href="#game" class="nav-link nav-link--adventure" id="nav-adventure">Sound Adventure</a>
+      <a href="#bts" class="nav-link" id="nav-bts">BTS</a>
       <a href="#team" class="nav-link" id="nav-team" aria-label="About the Team">
         <span class="nav-label-desktop">About the Team</span>
         <span class="nav-label-mobile">Team</span>
@@ -37,20 +38,17 @@
   </nav>
 
   <main>
+    <!-- ── LANDING ──────────────────────────────────────── -->
     <section id="landing" class="section section--landing">
       <div class="landing-content">
-        <p class="landing-kicker">An ancient warning returns</p>
-        <h1>Sound Guardian: The Harmony Battle</h1>
-        <p class="landing-story">
-          In an age where noise drowns memory, the sealed demon of discord begins to stir.
-          Only one Guardian can weave sound back into harmony before the world falls silent in chaos.
-        </p>
+        <h1 class="landing-title">Sound Guardian: The Harmony Battle</h1>
         <button id="orbTrigger" class="orb-button" aria-label="Start story by clicking red light"></button>
         <p class="landing-instruction">Click on Red Light</p>
         <a href="#game" class="btn landing-quick-link">Skip to Sound Adventure</a>
       </div>
     </section>
 
+    <!-- ── STORY SCENES ──────────────────────────────────── -->
     <section id="scene1" class="section scene scene--1">
       <div class="scene-card">
         <button class="scene-sound-btn" id="sceneReplayBtn" aria-label="Replay scene sound">🔊</button>
@@ -63,6 +61,7 @@
       </div>
     </section>
 
+    <!-- ── GAME ─────────────────────────────────────────── -->
     <section id="game" class="section section--game">
       <div class="game-header">
         <div class="progress-wrap">
@@ -71,7 +70,6 @@
             <div id="progressBar" class="progress-bar"></div>
           </div>
         </div>
-        <div class="score-display">Score: <span id="scoreValue">0</span></div>
       </div>
 
       <div class="game-layout">
@@ -108,6 +106,7 @@
       </div>
     </section>
 
+    <!-- ── ENDING ────────────────────────────────────────── -->
     <section id="ending" class="section section--ending" aria-hidden="true">
       <div class="ending-card" id="endingCard">
         <h2 id="endingTitle"></h2>
@@ -120,14 +119,38 @@
       </div>
     </section>
 
+    <!-- ── BEHIND THE SCENES ─────────────────────────────── -->
+    <section id="bts" class="section section--bts">
+      <div class="bts-inner">
+        <div class="bts-header">
+          <h2 class="bts-title">Behind the Scenes</h2>
+          <p class="bts-subtitle">A glimpse into the making of Sound Guardian.</p>
+        </div>
+        <div class="bts-gallery">
+          <figure class="bts-figure">
+            <div class="bts-img-wrap">
+              <img src="Images/BTS/BTS1.jpeg" alt="Behind the scenes — development session 1" />
+            </div>
+          </figure>
+          <figure class="bts-figure">
+            <div class="bts-img-wrap">
+              <img src="Images/BTS/BTS2.jpeg" alt="Behind the scenes — development session 2" />
+            </div>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TEAM ──────────────────────────────────────────── -->
     <section id="team" class="section section--team">
       <div class="team-card team-card--wide">
         <h2>About the Team</h2>
         <p class="team-subtitle">Four guardians behind the Sound Guardian experience.</p>
         <div class="team-grid">
+
           <article class="photocard">
             <div class="photo-wrap">
-              <img src="Images/Team Members/mily.jpg" alt="Mily photo" />
+              <img src="Images/Team Members/mily.jpg" alt="Rabeya Zahan Mily" />
             </div>
             <h3>Rabeya Zahan Mily</h3>
             <p class="role">Web Developer</p>
@@ -139,10 +162,10 @@
           </article>
 
           <article class="photocard">
-            <div class="photo-wrap photo-wrap--placeholder">
-              <span>Photo 2</span>
+            <div class="photo-wrap">
+              <img src="Images/Team Members/alwin.png" alt="Alwin" />
             </div>
-            <h3>Member 2</h3>
+            <h3>Alwin</h3>
             <p class="role">Role: Add role here</p>
             <p class="about">About: Add a short intro.</p>
             <div class="favorite-wrap">
@@ -176,10 +199,15 @@
               <p class="favorite">Add a favorite genre, artist, or vibe.</p>
             </div>
           </article>
+
         </div>
       </div>
     </section>
   </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
 
   <script src="script.js"></script>
 </body>
