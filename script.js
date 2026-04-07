@@ -438,9 +438,16 @@ function setup() {
   });
 
   refs.storyNextBtn.addEventListener("click", () => {
+
     if (state.storyIndex >= storyScenes.length - 1) {
       stopSceneAudio();
-      window.location.hash = "#game";
+      const gameSection = document.getElementById("game");
+      if (gameSection) {
+        
+        gameSection.scrollIntoView({ behavior: "smooth" });
+        
+        window.location.hash = "#game";
+      }
       return;
     }
     state.storyIndex += 1;
