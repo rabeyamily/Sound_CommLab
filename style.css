@@ -838,30 +838,9 @@ main {
   margin: 0;
 }
 
-.bts-img-wrap {
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid rgba(240, 192, 64, 0.22);
-  box-shadow:
-    0 8px 40px rgba(0, 0, 0, 0.55),
-    0 0 0 1px rgba(240, 192, 64, 0.06) inset;
-  aspect-ratio: 4 / 3;
-  background: rgba(8, 10, 20, 0.6);
-  transition: transform 360ms ease, box-shadow 360ms ease;
-}
-
-.bts-img-wrap:hover {
-  transform: translateY(-4px);
-  box-shadow:
-    0 16px 56px rgba(0, 0, 0, 0.65),
-    0 0 32px rgba(240, 192, 64, 0.1),
-    0 0 0 1px rgba(240, 192, 64, 0.14) inset;
-}
-
 .bts-img-wrap img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 
@@ -1468,7 +1447,10 @@ main {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center; 
+  gap: 15px;
+  max-width: 1000px; 
+  margin: 0 auto;    
 }
 
 .bts-gallery-carousel {
@@ -1476,49 +1458,71 @@ main {
   gap: 24px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  scrollbar-width: none; /* Hide scrollbar Firefox */
+  scrollbar-width: none; 
   scroll-behavior: smooth;
   padding: 20px 0;
+  width: 100%;
 }
 
 .bts-gallery-carousel::-webkit-scrollbar {
-  display: none; /* Hide scrollbar Chrome/Safari */
+  display: none;
 }
 
 .bts-figure {
-  flex: 0 0 calc(50% - 12px); /* Shows 2 images at a time */
+  flex: 0 0 100%; 
   scroll-snap-align: center;
   margin: 0;
+  display: flex;
+  justify-content: center;
 }
 
+.bts-img-wrap {
+  width: 100%;
+  max-width: 800px; 
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.bts-img-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+
 .carousel-btn {
-  background: rgba(7, 11, 22, 0.8);
-  border: 1px solid var(--gold);
-  color: var(--gold);
-  width: 44px;
-  height: 44px;
+  background: #070b16; 
+  border: 2px solid #d4af37; 
+  color: #d4af37;
+  
+  /* Force circular shape */
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0; 
   border-radius: 50%;
+  
   cursor: pointer;
   z-index: 10;
-  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
 }
 
 .carousel-btn:hover {
-  background: var(--gold);
-  color: var(--bg-void);
-  box-shadow: 0 0 15px var(--gold);
+  background: #d4af37;
+  color: #070b16;
+  box-shadow: 0 0 15px #d4af37;
 }
 
-/* Responsive adjustment for Mobile */
 @media (max-width: 768px) {
   .bts-figure {
-    flex: 0 0 85%; /* Shows 1 image and a peek of the next */
+    flex: 0 0 90%; 
   }
   .carousel-btn {
-    display: none; /* On mobile, users usually prefer swiping */
+    display: none; 
   }
 }
