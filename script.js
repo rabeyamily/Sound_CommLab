@@ -4,7 +4,7 @@
 // ─────────────────────────────────────────────────────────────
 const rounds = [
   {
-    scene: "Scene 5",
+    scene: "",
     songs: [
       { type: "good", points: 30, effect: "The monster shrinks! Harmony is restored." },
       { type: "chaos", points: 10, effect: "The monster grows! Chaos feeds it!" },
@@ -12,7 +12,7 @@ const rounds = [
     ]
   },
   {
-    scene: "Scene 6",
+    scene: "",
     songs: [
       { type: "good", points: 30, effect: "The monster recoils in pain!" },
       { type: "chaos", points: 10, effect: "The monster roars with delight!" },
@@ -20,7 +20,7 @@ const rounds = [
     ]
   },
   {
-    scene: "Scene 7",
+    scene: "",
     songs: [
       { type: "good", points: 30, effect: "The monster shrivels! Rhythm defeats chaos!" },
       { type: "chaos", points: 10, effect: "The monster absorbs the noise and grows!" },
