@@ -1459,3 +1459,66 @@ main {
     padding: 7px 8px;
   }
 }
+
+
+
+/* ── CAROUSEL SPECIFIC STYLES ─────────────────────── */
+
+.bts-carousel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bts-gallery-carousel {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none; /* Hide scrollbar Firefox */
+  scroll-behavior: smooth;
+  padding: 20px 0;
+}
+
+.bts-gallery-carousel::-webkit-scrollbar {
+  display: none; /* Hide scrollbar Chrome/Safari */
+}
+
+.bts-figure {
+  flex: 0 0 calc(50% - 12px); /* Shows 2 images at a time */
+  scroll-snap-align: center;
+  margin: 0;
+}
+
+.carousel-btn {
+  background: rgba(7, 11, 22, 0.8);
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.carousel-btn:hover {
+  background: var(--gold);
+  color: var(--bg-void);
+  box-shadow: 0 0 15px var(--gold);
+}
+
+/* Responsive adjustment for Mobile */
+@media (max-width: 768px) {
+  .bts-figure {
+    flex: 0 0 85%; /* Shows 1 image and a peek of the next */
+  }
+  .carousel-btn {
+    display: none; /* On mobile, users usually prefer swiping */
+  }
+}

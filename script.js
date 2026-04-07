@@ -479,3 +479,20 @@ function setup() {
 
 // App bootstrap
 setup();
+
+
+// BTS Buttons
+
+const carousel = document.querySelector('.bts-gallery-carousel');
+const nextBtn = document.querySelector('.carousel-btn.next');
+const prevBtn = document.querySelector('.carousel-btn.prev');
+
+if (carousel && nextBtn && prevBtn) {
+  nextBtn.addEventListener('click', () => {
+    carousel.scrollBy({ left: carousel.offsetWidth / 2, behavior: 'smooth' });
+  });
+
+  prevBtn.addEventListener('click', () => {
+    carousel.scrollBy({ left: -(carousel.offsetWidth / 2), behavior: 'smooth' });
+  });
+}
