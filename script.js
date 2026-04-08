@@ -195,7 +195,7 @@ function syncVolume() {
 function renderStoryScene() {
   const scene = storyScenes[state.storyIndex];
 
-  refs.storySceneTitle.textContent = `Scene ${state.storyIndex + 1}`;
+  refs.storySceneTitle.textContent = ``;
   refs.storySceneText.textContent = scene.text;
 
   const isFirstScene = state.storyIndex === 0;
