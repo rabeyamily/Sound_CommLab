@@ -105,7 +105,8 @@ const refs = {
   endingSection: document.getElementById("ending"),
   tryAgainBtn: document.getElementById("tryAgainBtn"),
   navStory: document.getElementById("nav-story"),
-  sectionNodes: Array.from(document.querySelectorAll("#landing, #scene1, #game, #ending, #bts, #team"))
+  sectionNodes: Array.from(document.querySelectorAll("#landing, #scene1, #game, #ending, #bts, #team")),
+  storyRestartBtn: document.getElementById("storyRestartBtn"),
 };
 
 // ─────────────────────────────────────────────────────────────
@@ -193,12 +194,27 @@ function syncVolume() {
 
 function renderStoryScene() {
   const scene = storyScenes[state.storyIndex];
-  refs.storySceneTitle.textContent = scene.title;
+
+  refs.storySceneTitle.textContent = `Scene ${state.storyIndex + 1}`;
   refs.storySceneText.textContent = scene.text;
-  refs.storyPrevBtn.disabled = state.storyIndex === 0;
-  refs.storyNextBtn.textContent = state.storyIndex === storyScenes.length - 1
-    ? "Begin Your Quest"
-    : "Next";
+
+  const isFirstScene = state.storyIndex === 0;
+  const isLastScene = state.storyIndex === storyScenes.length - 1;
+
+  if (isFirstScene) {
+    refs.storyPrevBtn.classList.add("hidden");
+  } else {
+    refs.storyPrevBtn.classList.remove("hidden");
+  }
+  1212
+  if (isLastScene) {
+    refs.storyRestartBtn.classList.remove("hidden"); 
+    refs.storyNextBtn.textContent = "Begin Your Quest";
+  } else {
+    refs.storyRestartBtn.classList.add("hidden");
+    refs.storyNextBtn.textContent = "Next";
+  }
+
   refs.sceneSection.classList.remove("scene--1", "scene--2", "scene--3", "scene--4");
   refs.sceneSection.classList.add(scene.className);
 }
@@ -453,6 +469,12 @@ function setup() {
     state.storyIndex += 1;
     renderStoryScene();
     startSceneNarration(state.storyIndex);
+  });
+
+  refs.storyRestartBtn.addEventListener("click", () => {
+    state.storyIndex = 0;
+    renderStoryScene();
+    startSceneNarration(0);
   });
 
   // ── Volume slider ──
